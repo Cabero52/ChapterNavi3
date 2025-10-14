@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -118,9 +118,10 @@ fun ListScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
-                        items(state.items, key = { it.url }) { pokemon ->
+                        itemsIndexed(state.items, key = { index, pokemon -> pokemon.url }) { index, pokemon ->
                             PokemonCard(
                                 pokemon = pokemon,
+                                index = index,
                                 onClick = {}
                             )
                         }
@@ -134,6 +135,7 @@ fun ListScreen(
 @Composable
 fun PokemonCard(
     pokemon: PokemonDto,
+    index: Int,
     modifier: Modifier = Modifier,
     onClick: (PokemonDto) -> Unit = {}
 ) {
@@ -153,7 +155,7 @@ fun PokemonCard(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(pokemon.url)
+                    .data("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${index+1}.png")
                     .crossfade(true)
                     .build(),
                 contentDescription = "Sprite de ${pokemon.name}",
@@ -169,11 +171,6 @@ fun PokemonCard(
                 modifier = Modifier
                     .weight(1f)
             ) {
-                Text(
-                    text = "#${pokemon.id.coerceAtLeast(0)}",
-                    style = typography.labelMedium,
-                    color = colorScheme.primary
-                )
                 Text(
                     text = pokemon.name.replaceFirstChar { it.uppercase() },
                     style = typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
