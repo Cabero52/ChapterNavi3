@@ -1,18 +1,25 @@
 package com.chapter.android.nav3.presentation.list
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chapter.android.nav3.data.datasource.PokemonRemoteDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class ListViewModel(
+    val pokemonDataSource: PokemonRemoteDataSource
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ListState())
     val state: StateFlow<ListState> = _state
 
     init {
-
+        viewModelScope.launch{
+            val result = pokemonDataSource.getPage(100,0)
+            _state.update { it.copy(items = result.results) }
+        }
     }
 
     fun onAction(action: ListAction) {

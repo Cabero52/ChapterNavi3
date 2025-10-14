@@ -3,17 +3,13 @@ package com.chapter.android.nav3.data.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Paginated<T>(
+data class Paginated<PokemonDto>(
     val count: Int,
     val next: String? = null,
     val previous: String? = null,
-    val results: List<T>
+    val results: List<PokemonDto>
 )
-@Serializable
-data class NamedResource(
-    val name: String,
-    val url: String
-)
+
 @Serializable
 data class PokemonDto(
     val id: Int,

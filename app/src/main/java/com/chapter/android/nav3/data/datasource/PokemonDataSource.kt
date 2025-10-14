@@ -1,9 +1,11 @@
 package com.chapter.android.nav3.data.datasource
 
-import io.ktor.client.HttpClient
+import com.chapter.android.nav3.data.models.Paginated
+import com.chapter.android.nav3.data.models.PokemonDto
+import com.chapter.android.nav3.data.network.PokemonApi
 
 class PokemonRemoteDataSource(private val api: PokemonApi) {
-    suspend fun getPage(limit: Int, offset: Int): Paginated<NamedResource> =
+    suspend fun getPage(limit: Int, offset: Int): Paginated<PokemonDto> =
         api.listPokemon(limit, offset)
     suspend fun getDetail(idOrName: String): PokemonDto =
         api.getPokemon(idOrName)

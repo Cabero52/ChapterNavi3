@@ -1,12 +1,16 @@
 package com.chapter.android.nav3.presentation.list
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.chapter.android.nav3.data.models.PokemonDto
 
 @Composable
 fun ListScreen(
@@ -32,6 +36,10 @@ fun ListScreen(
     if (state.isLoading) {
 
     }
+    ListContentScreen(
+        state=state,
+        onAction = {}
+    )
     when (state.dialog) {
         ListState.Dialog.NoConnected -> {
         }
@@ -49,6 +57,18 @@ fun ListContentScreen(
     state: ListState,
     onAction: (ListAction) -> Unit
 ) {
+    LazyColumn {
+        items(items= state.items){
+            PokeCard(
+                item = it
+            )
+        }
+    }
+}
 
-
+@Composable
+fun PokeCard(
+    item: PokemonDto,
+){
+    Text(item.name)
 }

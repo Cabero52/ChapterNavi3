@@ -7,10 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.chapter.android.nav3.data.datasource.PokemonRemoteDataSource
+import com.chapter.android.nav3.data.network.KtorClientFactory
+import com.chapter.android.nav3.data.network.KtorPokemonApi
+import com.chapter.android.nav3.presentation.list.ListScreen
+import com.chapter.android.nav3.presentation.list.ListViewModel
 import com.chapter.android.nav3.ui.theme.ChapterNavi3Theme
 
 class MainActivity : ComponentActivity() {
@@ -32,9 +36,15 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+    ListScreen(
+        viewModel = ListViewModel(
+            pokemonDataSource = PokemonRemoteDataSource(
+                api = KtorPokemonApi(
+                    client = KtorClientFactory.build()
+                )
+            )
+        ),
+        onBack = {}
     )
 }
 
