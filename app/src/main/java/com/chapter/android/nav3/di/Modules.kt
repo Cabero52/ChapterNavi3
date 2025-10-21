@@ -4,6 +4,7 @@ import com.chapter.android.nav3.data.datasource.PokemonRemoteDataSource
 import com.chapter.android.nav3.data.network.KtorClientFactory
 import com.chapter.android.nav3.data.network.KtorPokemonApi
 import com.chapter.android.nav3.data.network.PokemonApi
+import com.chapter.android.nav3.presentation.detail.DetailViewModel
 import com.chapter.android.nav3.presentation.list.ListViewModel
 import io.ktor.client.HttpClient
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -14,4 +15,5 @@ val Modules = module {
     single<PokemonApi> { KtorPokemonApi(get()) }
     single<HttpClient> { KtorClientFactory.build() }
     viewModelOf(::ListViewModel)
+    viewModelOf(::DetailViewModel)
 }

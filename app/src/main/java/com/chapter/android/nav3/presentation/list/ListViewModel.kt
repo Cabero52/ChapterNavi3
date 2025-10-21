@@ -3,6 +3,7 @@ package com.chapter.android.nav3.presentation.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chapter.android.nav3.data.datasource.PokemonRemoteDataSource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -27,7 +28,28 @@ class ListViewModel(
             ListAction.OnBack -> TODO()
             ListAction.OnDialogDismiss -> dismissDialog()
             ListAction.OnRetry -> TODO()
+            ListAction.ResetPokemon -> resetPokemonInfo()
+            is ListAction.GetPokemonDetail -> obtainPokemonData(action.pokemonName)
             else -> Unit
+        }
+    }
+
+
+    private fun resetPokemonInfo(){
+        _state.update { state ->
+            state.copy(
+                pokemon = null
+            )
+        }
+    }
+    private fun obtainPokemonData(pokemonName: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = pokemonDataSource.getDetail(pokemonName)
+            _state.update { state ->
+                state.copy(
+                    pokemon = result
+                )
+            }
         }
     }
 

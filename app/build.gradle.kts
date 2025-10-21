@@ -61,6 +61,10 @@ dependencies {
     //implementation("io.ktor:ktor-client-timeout:2.3.12")
     //implementation("io.ktor:ktor-client-okhttp:3.0.0")
 
+    //Skydoves
+    implementation(libs.landscapist.palette)
+    implementation(libs.landscapist.glide)
+
     //Navigation 3
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.navigation3.runtime)
