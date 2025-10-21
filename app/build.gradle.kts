@@ -58,8 +58,8 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.resources)
-    implementation("io.ktor:ktor-client-timeout:2.3.12")
-    implementation("io.ktor:ktor-client-okhttp:3.0.0")
+    //implementation("io.ktor:ktor-client-timeout:2.3.12")
+    //implementation("io.ktor:ktor-client-okhttp:3.0.0")
 
     //Navigation 3
     implementation(libs.androidx.navigation3.ui)
