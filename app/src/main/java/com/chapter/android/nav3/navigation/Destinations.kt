@@ -9,4 +9,4 @@ data object SplashPokemonDestination
 data object ListPokemonDestination
 
 @Serializable
-data class DetailPokemonDestination(val pokemon: PokemonDetailResponse): NavKey
+data class DetailPokemonDestination(val pokemon: PokemonDetailResponse)

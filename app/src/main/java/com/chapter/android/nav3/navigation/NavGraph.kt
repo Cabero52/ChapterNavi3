@@ -17,9 +17,10 @@ import com.chapter.android.nav3.presentation.detail.DetailScreen
 import com.chapter.android.nav3.presentation.list.ListScreen
 import com.chapter.android.nav3.presentation.splash.SplashScreen
 
+
 @Composable
 fun NavGraph() {
-
+    val test = "ChapterNavigation3"
     val backStack = remember { mutableStateListOf<Any>(SplashPokemonDestination) }
 
     NavDisplay(
@@ -39,35 +40,12 @@ fun NavGraph() {
                     }
                 )
             }
-            entry<DetailPokemonDestination>(
-                metadata = NavDisplay.transitionSpec {
-                    slideInVertically(
-                        initialOffsetY = { it },
-                        animationSpec = tween(1000)
-                    ) togetherWith ExitTransition.KeepUntilTransitionsFinished
-                } + NavDisplay.predictivePopTransitionSpec {
-                    EnterTransition.None togetherWith
-                            slideOutVertically(
-                                targetOffsetY = { it },
-                                animationSpec = tween(1000)
-                            )
-                } + NavDisplay.predictivePopTransitionSpec {
-                    EnterTransition.None togetherWith
-                            slideOutVertically(
-                                targetOffsetY = { it },
-                                animationSpec = tween(1000)
-                            )
-                }
-            ) { destination ->
+            entry<DetailPokemonDestination> { destination ->
                 DetailScreen(
                     pokemon = destination.pokemon,
                     onBack = { backStack.removeLastOrNull() }
                 )
             }
-        },
-        popTransitionSpec = {
-            slideInHorizontally(initialOffsetX = { -it }) togetherWith
-                    slideOutHorizontally(targetOffsetX = { it })
-        },
+        }
     )
 }
