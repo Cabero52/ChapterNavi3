@@ -1,6 +1,7 @@
 package com.chapter.android.nav3.data.network
 
 import com.chapter.android.nav3.data.models.Paginated
+import com.chapter.android.nav3.data.models.PokemonDetailResponse
 import com.chapter.android.nav3.data.models.PokemonDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -9,7 +10,7 @@ import io.ktor.client.request.parameter
 
 interface PokemonApi {
     suspend fun listPokemon(limit: Int, offset: Int): Paginated
-    suspend fun getPokemon(idOrName: String): PokemonDto
+    suspend fun getPokemon(idOrName: String): PokemonDetailResponse
 }
 class KtorPokemonApi(private val client: HttpClient) : PokemonApi {
     override suspend fun listPokemon(limit: Int, offset: Int): Paginated =
@@ -17,6 +18,6 @@ class KtorPokemonApi(private val client: HttpClient) : PokemonApi {
             parameter("limit", limit)
             parameter("offset", offset)
         }.body()
-    override suspend fun getPokemon(idOrName: String): PokemonDto =
+    override suspend fun getPokemon(idOrName: String): PokemonDetailResponse =
         client.get("${NetworkConfig.API_PREFIX}pokemon/$idOrName").body()
 }

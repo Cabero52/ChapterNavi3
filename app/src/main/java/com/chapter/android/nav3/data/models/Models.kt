@@ -15,3 +15,30 @@ data class PokemonDto(
     val name: String,
     val url: String
 )
+
+@Serializable
+data class PokemonDetailResponse(
+    val id: Int,
+    val name: String,
+    val height: Int,
+    val weight: Int,
+    val types: List<PokemonTypeResponse>,
+) {
+    val image: String
+        inline get() {
+            //return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png"
+            return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png"
+        }
+}
+
+@Serializable
+data class PokemonTypeResponse(
+    val slot: Int,
+    val type: TypeResponse
+)
+
+@Serializable
+data class TypeResponse(
+    val name: String,
+    val url: String
+)

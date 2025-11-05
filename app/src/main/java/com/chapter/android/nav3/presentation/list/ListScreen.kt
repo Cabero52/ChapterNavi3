@@ -54,6 +54,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen(
     viewModel: ListViewModel = koinViewModel(),
+    onItem: (Int) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -123,7 +124,7 @@ fun ListScreen(
                             PokemonCard(
                                 pokemon = pokemon,
                                 index = index,
-                                onClick = {}
+                                onClick = { onItem(index + 1) }
                             )
                         }
                     }
@@ -156,7 +157,7 @@ fun PokemonCard(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${index+1}.png")
+                    .data("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${index + 1}.png")
                     .crossfade(true)
                     .build(),
                 contentDescription = "Sprite de ${pokemon.name}",
