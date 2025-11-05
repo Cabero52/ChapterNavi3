@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
-    private val id: Int,
+    private val id: Int? = null,
     private val pokemonDataSource: PokemonRemoteDataSource
 ) : ViewModel() {
 
@@ -17,9 +17,11 @@ class DetailViewModel(
     val state: StateFlow<DetailState> = _state
 
     init {
-        viewModelScope.launch {
-            val result = pokemonDataSource.getDetail("$id")
-            _state.update { it.copy(view = DetailState.View.Loaded(result)) }
+        if (id != null) {
+            viewModelScope.launch {
+                val result = pokemonDataSource.getDetail("$id")
+                _state.update { it.copy(view = DetailState.View.Loaded(result)) }
+            }
         }
     }
 
