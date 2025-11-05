@@ -5,30 +5,16 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.chapter.android.nav3.presentation.list.ListScreen
-import com.chapter.android.nav3.presentation.splash.SplashScreen
 
 @Composable
 fun NavGraph() {
 
     val backStack = remember { mutableStateListOf<Any>(SplashPokemonDestination) }
 
+    // Completa el NavDisplay, a ver si habéis estado atentos. 😉
     NavDisplay(
         backStack = backStack,
-        onBack = { backStack.removeLastOrNull() },
-        entryProvider = entryProvider {
-            entry<SplashPokemonDestination> {
-                SplashScreen(
-                    goToPokemonList = { backStack.add(ListPokemonDestination) }
-                )
-            }
-            entry<ListPokemonDestination> {
-                ListScreen(
-                    onItem = { backStack.add(DetailPokemonDestination(it)) },
-                    onBack = { backStack.removeLastOrNull() }
-                )
-            }
-        }
-
+        onBack = { },
+        entryProvider = entryProvider {}
     )
 }
