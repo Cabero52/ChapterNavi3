@@ -13,7 +13,8 @@ data class Paginated(
 @Serializable
 data class PokemonDto(
     val name: String,
-    val url: String
+    val url: String,
+    val isFavorite: Boolean = false
 )
 
 @Serializable
@@ -22,7 +23,7 @@ data class PokemonDetailResponse(
     val name: String,
     val height: Int,
     val weight: Int,
-    val types: List<PokemonTypeResponse>,
+    val types: List<PokemonTypeResponse>
 ) {
     val image: String
         inline get() {
@@ -42,3 +43,5 @@ data class TypeResponse(
     val name: String,
     val url: String
 )
+
+data class FavoriteResult(val name: String, val isFavorite: Boolean)

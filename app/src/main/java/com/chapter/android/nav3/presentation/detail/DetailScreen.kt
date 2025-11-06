@@ -12,9 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -36,6 +40,7 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.chapter.android.nav3.data.models.FavoriteResult
 import com.chapter.android.nav3.data.models.PokemonDetailResponse
 import com.chapter.android.nav3.presentation.detail.composables.PokemonHeightWeight
 import com.skydoves.landscapist.components.rememberImageComponent
@@ -45,15 +50,14 @@ import com.skydoves.landscapist.palette.PalettePlugin
 @Composable
 fun DetailScreen(
     viewModel: DetailViewModel,
-    onBack: () -> Unit = {},
+    onBack: (FavoriteResult) -> Unit = {},
 ) {
     val state by viewModel.state.collectAsState()
 
-    // Lógica de acciones
     val onAction by remember {
         mutableStateOf<(DetailActions) -> Unit>({ action ->
             when (action) {
-                DetailActions.OnBack -> onBack()
+                DetailActions.OnBack -> onBack(FavoriteResult(state.name, state.isFavorite))
                 else -> viewModel.onAction(action)
             }
         })
@@ -65,8 +69,10 @@ fun DetailScreen(
     when (state.view) {
         DetailState.View.Loading -> Unit
         is DetailState.View.Loaded -> {
+            val pokemon = (state.view as DetailState.View.Loaded).pokemon
             DetailContentScreen(
-                pokemon = (state.view as DetailState.View.Loaded).pokemon,
+                pokemon = pokemon,
+                isFavorite = state.isFavorite,
                 onAction = onAction
             )
         }
@@ -89,6 +95,7 @@ fun DetailScreen(
 fun DetailContentScreen(
     modifier: Modifier = Modifier,
     pokemon: PokemonDetailResponse,
+    isFavorite: Boolean,
     onAction: (DetailActions) -> Unit
 ) {
     Scaffold(
@@ -187,6 +194,18 @@ fun DetailContentScreen(
                 weight = pokemon.weight / 10f,
                 textColor = secondaryColor.value
             )
+            Box(contentAlignment = Alignment.Center) {
+                IconButton(
+                    onClick = { onAction(DetailActions.OnFavorite) }, colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = if (isFavorite) Color.Yellow else LocalContentColor.current
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = if (isFavorite) "Unmark favorite" else "Mark favorite"
+                    )
+                }
+            }
         }
     }
 }

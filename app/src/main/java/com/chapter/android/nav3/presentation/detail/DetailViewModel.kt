@@ -19,7 +19,7 @@ class DetailViewModel(
     init {
         viewModelScope.launch {
             val result = pokemonDataSource.getDetail("$id")
-            _state.update { it.copy(view = DetailState.View.Loaded(result)) }
+            _state.update { it.copy(view = DetailState.View.Loaded(result), name = result.name) }
         }
     }
 
@@ -28,6 +28,7 @@ class DetailViewModel(
             DetailActions.OnBack -> TODO()
             DetailActions.OnDialogDismiss -> dismissDialog()
             DetailActions.OnRetry -> TODO()
+            DetailActions.OnFavorite -> _state.update { it.copy(isFavorite = !it.isFavorite) }
             else -> Unit
         }
     }

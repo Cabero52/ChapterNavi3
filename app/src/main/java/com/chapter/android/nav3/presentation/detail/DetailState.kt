@@ -7,6 +7,8 @@ import com.chapter.android.nav3.data.models.PokemonDetailResponse
 @Stable
 data class DetailState(
     val view: View = View.Loading,
+    val name: String = "",
+    val isFavorite: Boolean = false,
     val dialog: Dialog = Dialog.NoDialog
 ) {
     @Immutable

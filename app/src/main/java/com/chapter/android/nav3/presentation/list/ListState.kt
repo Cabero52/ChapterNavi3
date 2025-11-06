@@ -8,7 +8,7 @@ import com.chapter.android.nav3.data.models.PokemonDto
 data class ListState(
     val isLoading: Boolean = false,
     val dialog: Dialog = Dialog.NoDialog,
-    val items: List<PokemonDto> = emptyList()
+    var items: List<PokemonDto> = emptyList()
 ) {
     @Immutable
     sealed interface Dialog {

@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,6 +29,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
@@ -41,6 +43,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -48,12 +51,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.chapter.android.nav3.data.models.PokemonDto
-import org.koin.androidx.compose.koinViewModel
+import com.chapter.android.nav3.presentation.LifecycleAware
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
-    viewModel: ListViewModel = koinViewModel(),
+    viewModel: ListViewModel,
     onItem: (Int) -> Unit = {},
     onBack: () -> Unit = {},
 ) {
@@ -66,6 +69,11 @@ fun ListScreen(
             }
         })
     }
+
+    LifecycleAware(
+        onResume = { onAction(ListAction.LoadData) }
+    )
+
 
     BackHandler {
         onAction(ListAction.OnBack)
@@ -178,6 +186,12 @@ fun PokemonCard(
                     style = typography.titleMedium.copy(fontWeight = FontWeight.SemiBold)
                 )
             }
+
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = if (pokemon.isFavorite) "Unmark favorite" else "Mark favorite",
+                tint = if (pokemon.isFavorite) Color.Yellow else LocalContentColor.current
+            )
 
             IconButton(onClick = { onClick(pokemon) }) {
                 Icon(

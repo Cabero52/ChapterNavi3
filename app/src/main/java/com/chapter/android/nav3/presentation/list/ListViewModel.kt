@@ -9,25 +9,30 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ListViewModel(
+    val favorites: Map<String, Boolean>,
     val pokemonDataSource: PokemonRemoteDataSource
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ListState())
     val state: StateFlow<ListState> = _state
 
-    init {
-        viewModelScope.launch{
-            val result = pokemonDataSource.getPage(100,0)
-            _state.update { it.copy(items = result.results) }
-        }
-    }
-
     fun onAction(action: ListAction) {
         when (action) {
+            ListAction.LoadData -> loadData()
             ListAction.OnBack -> TODO()
             ListAction.OnDialogDismiss -> dismissDialog()
             ListAction.OnRetry -> TODO()
             else -> Unit
+        }
+    }
+
+    private fun loadData() {
+        viewModelScope.launch {
+            val result = pokemonDataSource.getPage(100, 0)
+            val updated = result.results.map {
+                it.copy(isFavorite = favorites[it.name] ?: false)
+            }
+            _state.update { it.copy(items = updated) }
         }
     }
 
