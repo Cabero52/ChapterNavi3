@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.list
+package com.chapter.android.nav3.presentation.auth.product.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +24,6 @@ class ListViewModel(
 
     fun onAction(action: ListAction) {
         when (action) {
-            ListAction.OnBack -> TODO()
             ListAction.OnDialogDismiss -> dismissDialog()
             ListAction.OnRetry -> TODO()
             else -> Unit

@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.splash
+package com.chapter.android.nav3.presentation.unauth.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

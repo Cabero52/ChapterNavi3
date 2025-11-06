@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.list
+package com.chapter.android.nav3.presentation.auth.product.list
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,22 +55,10 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen(
     viewModel: ListViewModel = koinViewModel(),
-    onItem: (Int) -> Unit = {},
-    onBack: () -> Unit = {},
+    onItem: (Int) -> Unit = {}
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val onAction by remember {
-        mutableStateOf<(ListAction) -> Unit>({ action ->
-            when (action) {
-                ListAction.OnBack -> onBack()
-                else -> viewModel.onAction(action)
-            }
-        })
-    }
-
-    BackHandler {
-        onAction(ListAction.OnBack)
-    }
+    val onAction by rememberUpdatedState(viewModel::onAction)
 
     Scaffold(
         topBar = {

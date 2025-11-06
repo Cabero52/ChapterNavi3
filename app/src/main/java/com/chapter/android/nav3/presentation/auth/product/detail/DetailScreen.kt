@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.detail
+package com.chapter.android.nav3.presentation.auth.product.detail
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -24,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,31 +38,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.chapter.android.nav3.data.models.PokemonDetailResponse
-import com.chapter.android.nav3.presentation.detail.composables.PokemonHeightWeight
+import com.chapter.android.nav3.presentation.auth.product.detail.composables.PokemonHeightWeight
 import com.skydoves.landscapist.components.rememberImageComponent
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.palette.PalettePlugin
 
 @Composable
 fun DetailScreen(
-    viewModel: DetailViewModel,
-    onBack: () -> Unit = {},
+    viewModel: DetailViewModel
 ) {
     val state by viewModel.state.collectAsState()
 
-    // Lógica de acciones
-    val onAction by remember {
-        mutableStateOf<(DetailActions) -> Unit>({ action ->
-            when (action) {
-                DetailActions.OnBack -> onBack()
-                else -> viewModel.onAction(action)
-            }
-        })
-    }
+    val onAction by rememberUpdatedState(viewModel::onAction)
 
-    BackHandler {
-        onAction(DetailActions.OnBack)
-    }
     when (state.view) {
         DetailState.View.Loading -> Unit
         is DetailState.View.Loaded -> {
@@ -103,8 +92,7 @@ fun DetailContentScreen(
                 },
                 navigationIcon = {
                     Icon(
-                        modifier = Modifier
-                            .clickable { onAction(DetailActions.OnBack) },
+                        modifier = Modifier.clickable {  },
                         imageVector = Icons.Rounded.ArrowBack,
                         contentDescription = "onBackIcon",
                         tint = DarkGray.copy(0.8f)

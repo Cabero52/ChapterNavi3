@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.detail
+package com.chapter.android.nav3.presentation.auth.product.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +25,6 @@ class DetailViewModel(
 
     fun onAction(action: DetailActions) {
         when (action) {
-            DetailActions.OnBack -> TODO()
             DetailActions.OnDialogDismiss -> dismissDialog()
             DetailActions.OnRetry -> TODO()
             else -> Unit

@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.detail
+package com.chapter.android.nav3.presentation.auth.product.detail
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable

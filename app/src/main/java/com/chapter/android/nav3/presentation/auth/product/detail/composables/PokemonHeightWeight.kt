@@ -1,4 +1,4 @@
-package com.chapter.android.nav3.presentation.detail.composables
+package com.chapter.android.nav3.presentation.auth.product.detail.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
