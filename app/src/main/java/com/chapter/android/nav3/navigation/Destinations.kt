@@ -1,5 +1,11 @@
 package com.chapter.android.nav3.navigation
 
-data object SplashPokemonDestination
-data object ListPokemonDestination
-data class DetailPokemonDestination(val id: Int)
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object SplashPokemonDestination : NavKey
+@Serializable
+data object ListPokemonDestination : NavKey
+@Serializable
+data class DetailPokemonDestination(val id: Int) : NavKey

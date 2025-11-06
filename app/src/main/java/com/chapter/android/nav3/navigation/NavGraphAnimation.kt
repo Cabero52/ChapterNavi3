@@ -1,10 +1,14 @@
 package com.chapter.android.nav3.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.chapter.android.nav3.presentation.detail.DetailScreen
@@ -15,9 +19,9 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-fun NavGraph() {
+fun NavGraphAnimation() {
 
-    val backStack = remember { mutableStateListOf<Any>(SplashPokemonDestination) }
+    val backStack = rememberNavBackStack(SplashPokemonDestination)
 
     NavDisplay(
         backStack = backStack,
@@ -26,10 +30,25 @@ fun NavGraph() {
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator()
         ),
+        transitionSpec = {
+            slideInHorizontally(initialOffsetX = { it }) togetherWith
+                    slideOutHorizontally(targetOffsetX = { -it })
+        },
+        popTransitionSpec = {
+            slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                    slideOutHorizontally(targetOffsetX = { it })
+        },
+        predictivePopTransitionSpec = {
+            slideInHorizontally(initialOffsetX = { -it }) togetherWith
+                    slideOutHorizontally(targetOffsetX = { it })
+        },
         entryProvider = entryProvider {
             entry<SplashPokemonDestination> {
                 SplashScreen(
-                    goToPokemonList = { backStack.add(ListPokemonDestination) }
+                    goToPokemonList = {
+                        backStack.clear()
+                        backStack.add(ListPokemonDestination)
+                    }
                 )
             }
             entry<ListPokemonDestination> {

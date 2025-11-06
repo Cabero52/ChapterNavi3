@@ -16,6 +16,7 @@ koinVersion = "3.5.6"
 koinComposeVersion = "3.5.6"
 landscapist = "2.5.1"
 navigation3RuntimeJvmstubs = "1.0.0-alpha07"
+adaptiveNavigation3Android = "1.3.0-alpha02"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +54,7 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = 
 landscapist-palette = { group = "com.github.skydoves", name = "landscapist-palette", version.ref = "landscapist" }
 landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapist" }
 androidx-navigation3-runtime-jvmstubs = { group = "androidx.navigation3", name = "navigation3-runtime-jvmstubs", version.ref = "navigation3RuntimeJvmstubs" }
+androidx-adaptive-navigation3-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation3-android", version.ref = "adaptiveNavigation3Android" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

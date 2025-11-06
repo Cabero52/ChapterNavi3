@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android.compat)
     implementation(libs.koin.compose)
+    implementation(libs.androidx.adaptive.navigation3.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
