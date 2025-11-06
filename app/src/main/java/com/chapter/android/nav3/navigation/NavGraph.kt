@@ -17,7 +17,7 @@ fun NavGraph() {
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
-            entry<SplashPokemonDestination> { //meter metadatos
+            entry<SplashPokemonDestination> {
                 SplashScreen(
                     goToPokemonList = { backStack.add(ListPokemonDestination) }
                 )
