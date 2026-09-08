@@ -1,9 +1,75 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "12:20"
+      timezone: "Europe/Madrid"
+    open-pull-requests-limit: 15
+    labels:
+      - "dependencies"
+      - "gradle"
+    assignees:
+      - "Cabero52"
+    commit-message:
+      prefix: "deps"
+
+    groups:
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin:*"
+          - "org.jetbrains.kotlin.*"
+          - "co.touchlab.skie*"
+          - "com.google.devtools.ksp*"
+
+      compose:
+        patterns:
+          - "org.jetbrains.compose*"
+
+      agp:
+        patterns:
+          - "com.android.*"
+
+      koin:
+        patterns:
+          - "io.insert-koin*"
+
+      firebase:
+        patterns:
+          - "com.google.firebase*"
+          - "com.google.gms*"
+
+      ktor:
+        patterns:
+          - "io.ktor:*"
+
+      supabase:
+        patterns:
+          - "io.github.jan-tennert.supabase*"
+
+      androidx-lifecycle:
+        patterns:
+          - "org.jetbrains.androidx.lifecycle*"
+          - "androidx.lifecycle*"
+
+      navigation3:
+        patterns:
+          - "androidx.navigation3*"
+
+      coil:
+        patterns:
+          - "io.coil-kt.coil3*"
+
       revenuecat:
         patterns:
           - "com.revenuecat.purchases*"
+
       datastore:
         patterns:
           - "androidx.datastore*"
+
       credentials:
         patterns:
           - "androidx.credentials*"
