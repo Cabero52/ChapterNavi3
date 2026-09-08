@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "tuesday"
-      time: "12:20"
+      time: "12:30"
       timezone: "Europe/Madrid"
     open-pull-requests-limit: 15
     labels:
@@ -79,7 +79,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "tuesday"
-      time: "12:20"
+      time: "12:30"
       timezone: "Europe/Madrid"
     labels:
       - "dependencies"
