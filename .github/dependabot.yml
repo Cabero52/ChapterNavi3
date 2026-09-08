@@ -20,7 +20,7 @@ updates:
       - "dependencies"
       - "gradle"
     assignees:
-      - "marccabero"
+      - "Cabero52"
     commit-message:
       prefix: "deps"
     # One PR per dependency, EXCEPT libraries that must move together: each
@@ -95,7 +95,7 @@ updates:
       - "dependencies"
       - "github-actions"
     assignees:
-      - "marccabero"
+      - "Cabero52"
     commit-message:
       prefix: "ci"
     groups:
