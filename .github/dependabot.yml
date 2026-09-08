@@ -1,0 +1,104 @@
+# Dependabot keeps dependencies fresh. It runs on GitHub's own infrastructure
+# (no runner needed) and opens PRs against master; the pr-build.yml workflow
+# then validates each PR on the self-hosted macOS runner.
+#
+# Scope today: the Gradle version catalog (gradle/libs.versions.toml), Swift Package 
+# Manager dependencies for iOS, plus the GitHub Actions used in our workflows. 
+# NOTE: Dependabot does NOT bump the Gradle wrapper version — that is updated 
+# manually via `./gradlew wrapper`.
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "12:10"
+      timezone: "Europe/Madrid"
+    open-pull-requests-limit: 15
+    labels:
+      - "dependencies"
+      - "gradle"
+    assignees:
+      - "marccabero"
+    commit-message:
+      prefix: "deps"
+    # One PR per dependency, EXCEPT libraries that must move together: each
+    # group below bundles co-versioned artifacts into a single PR so a bump
+    # never lands without its companions (e.g. SKIE/KSP track the Kotlin
+    # release, Compose runtime tracks Material3, Firebase BOM tracks its
+    # plugins). Anything not matched by a group keeps its own individual PR.
+    groups:
+      # Kotlin toolchain. SKIE and KSP are pinned to the Kotlin version, so a
+      # Kotlin bump is useless (and breaks the build) without the matching
+      # SKIE/KSP bump in the same PR. The compose-compiler plugin also rides
+      # the Kotlin version (org.jetbrains.kotlin.plugin.compose).
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin:*"     # kotlin-test, kotlin-test-junit
+          - "org.jetbrains.kotlin.*"     # KMP / serialization / compose-compiler / jvm plugins
+          - "co.touchlab.skie*"          # SKIE — pinned to the Kotlin version
+          - "com.google.devtools.ksp*"   # KSP — pinned to the Kotlin version
+      # Compose Multiplatform runtime + Material3 ship on the same release train
+      # but carry separate version refs (composeMultiplatform vs material3).
+      compose:
+        patterns:
+          - "org.jetbrains.compose*"
+      # The three Android Gradle Plugin ids share one version.
+      agp:
+        patterns:
+          - "com.android.*"
+      # Koin core libraries + the Koin annotations compiler plugin (separate
+      # version ref) must agree on version.
+      koin:
+        patterns:
+          - "io.insert-koin*"
+      # Firebase BOM + the Google Services and Crashlytics Gradle plugins.
+      firebase:
+        patterns:
+          - "com.google.firebase*"
+          - "com.google.gms*"
+      ktor:
+        patterns:
+          - "io.ktor:*"
+      supabase:
+        patterns:
+          - "io.github.jan-tennert.supabase*"
+      androidx-lifecycle:
+        patterns:
+          - "org.jetbrains.androidx.lifecycle*"
+          - "androidx.lifecycle*"
+      navigation3:
+        patterns:
+          - "androidx.navigation3*"
+      coil:
+        patterns:
+          - "io.coil-kt.coil3*"
+      revenuecat:
+        patterns:
+          - "com.revenuecat.purchases*"
+      datastore:
+        patterns:
+          - "androidx.datastore*"
+      credentials:
+        patterns:
+          - "androidx.credentials*"
+          -
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "12:10"
+      timezone: "Europe/Madrid"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    assignees:
+      - "marccabero"
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
